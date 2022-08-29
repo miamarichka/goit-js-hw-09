@@ -23,10 +23,6 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
-
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -49,9 +45,8 @@ const refs = {
   minutes: document.querySelector('[data-minutes]'),
   seconds: document.querySelector('[data-seconds]'),
   startBtn: document.querySelector('[data-start]'),
+  input: document.querySelector('input'),
 };
-
-refs.startBtn.disabled = true;
 
 flatpickr('#datetime-picker', options);//ініціалізація бібліотеки//
 
@@ -66,6 +61,8 @@ const timer = {
       return;
     }
     const startTime = datePicker.selectedDates[0];//початковий час у форматі дати//
+    refs.startBtn.disabled = true;
+    refs.input.disabled = true;
     this.isActive = true;
 
     this.intervalId = setInterval(() => {//встановлення інтервалу на кожні 1000мс//
@@ -74,6 +71,9 @@ const timer = {
       if (deltaTime < 0) {
         clearInterval(this.intervalId);
         this.isActive = false;
+        refs.startBtn.disabled = true;
+        refs.input.disabled = false;
+        Notiflix.Notify.info('Countdown is over');
         return;
       }
       const timeComponents = convertMs(deltaTime);//конвертація з мс в год, дні, хв//

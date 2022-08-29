@@ -11,17 +11,17 @@ stopBtn.addEventListener('click', onStopClick )
 
 
 function onStartClick(event){
-startBtn.setAttribute('disabled', true);
- if(stopBtn.hasAttribute('disabled')){
-  stopBtn.removeAttribute('disabled')
+startBtn.disabled = true;
+ if(stopBtn.disabled){
+  stopBtn.disabled = false;
  };
 intervalId = setInterval(changeBodyColor, INTERVAL_DELAY)
 };
 
 
 function onStopClick(event){
-startBtn.removeAttribute('disabled')
-stopBtn.setAttribute('disabled', true)
+startBtn.disabled = false;
+stopBtn.disabled = true;
 clearInterval(intervalId)
 };
 
